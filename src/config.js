@@ -9,10 +9,7 @@ class Config {
         this.RABBITMQ_ENDPOINT = process.env.RABBITMQ_ENDPOINT || ''
         this.MYSQL_DB = process.env.MYSQL_DB || ''
         this.CLIENT_URL = process.env.CLIENT_URL || ''
-        // this.MYSQL_HOST = process.env.MYSQL_HOST || ''
-        // this.MYSQL_USER = process.env.MYSQL_USER || ''
-        // this.MYSQL_PASSWORD = process.env.MYSQL_PASSWORD || ''
-        // this.MYSQL_PORT = process.env.MYSQL_PORT || 3306
+        
     }
 }
 

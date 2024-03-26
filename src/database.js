@@ -1,22 +1,27 @@
 const { Sequelize } = require('sequelize');
 const config = require('./config');
+const { winstonLogger } = require('../../9-jobber-shared/src/logger')
 
-const sequelize = new Sequelize(config.MYSQL_DB,{
-    dialect:'mysql',
+const log = winstonLogger('authServerDatabase', 'debug');
+
+const sequelize = new Sequelize(config.MYSQL_DB, {
+    dialect: 'mysql',
     logging: false,
-    dialectOptions:{
-        multipleStatements:true
+    dialectOptions: {
+        multipleStatements: true
     }
 });
 
-async function databaseConnection(){
+async function databaseConnection() {
     try {
         await sequelize.authenticate();
-        console.log('Auth-service database connected')
+        log.info('AuthService Mysql database connection has been established successfully.')
 
     } catch (error) {
-        console.log('database connection error',error);
+        log.error('Auth Service - Unable to connect to database.');
+        log.log('error', 'AuthService databaseConnection() method error:', error);
+
     }
 }
 
-module.exports = {sequelize,databaseConnection};
+module.exports = { sequelize, databaseConnection };

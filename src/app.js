@@ -1,25 +1,19 @@
-const { databaseConnection } = require('./database');
-const { AuthServer } = require('./server');
 const express = require('express');
+
 const app = express();
-const authserver = new AuthServer(app);
+const{start}  = require('./server');
+const {setAuthChannel} = require('./services/auth-service');
+const { databaseConnection } = require('./database');
 
-async function init() {
-    databaseConnection();
-    await authserver.start(app);
-    return await authserver.authChannel;
 
+async function init(){
+    await databaseConnection();
+   const authChannel = await start(app);
+
+    setAuthChannel(authChannel);
+
+    
 }
 
-let authChannel = init();
-
-module.exports = {authChannel};
-
-
-
-// console.log(authChannel);
-
-
-
-
+init();
 
