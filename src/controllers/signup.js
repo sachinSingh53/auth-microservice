@@ -1,19 +1,18 @@
-const config = require("../config");
-const { publishDirectMessage } = require("../queues/auth.producer");
-const signupSchema = require("../schemes/signup");
-const { getUserByUsernameOrEmail, createUser, signToken } = require("../services/auth-service");
-const crypto = require('crypto');
-const { StatusCodes } = require('http-status-codes')
-const { winstonLogger } = require('../../../9-jobber-shared/src/logger');
-const { BadRequestError } = require('../../../9-jobber-shared/src/errors')
-
+import config from "../config.js";
+import { publishDirectMessage } from "../queues/auth.producer.js";
+import signupSchema from "../schemes/signup.js";
+import { getUserByUsernameOrEmail, createUser, signToken } from "../services/auth-service.js";
+import crypto from 'crypto';
+import { StatusCodes } from 'http-status-codes';
+import { winstonLogger } from '../../../9-jobber-shared/src/logger.js';
+import { BadRequestError } from '../../../9-jobber-shared/src/errors.js';
+import {authChannel} from '../app.js'
 const log = winstonLogger('AuthController', 'debug');
 
 
 
 
-
-module.exports.create = async (req, res) => {
+export const create = async (req, res) => {
 
 
     const { error } = signupSchema.validate(req.body);
@@ -26,7 +25,6 @@ module.exports.create = async (req, res) => {
     // console.log(checkIfUserExists);
     if (checkIfUserExists) {
         throw new BadRequestError('Invalid credentials. Email or Username', 'SignUp create() method error');
-
     }
 
     const randomCharacters = crypto.randomBytes(20).toString('hex');
@@ -48,17 +46,20 @@ module.exports.create = async (req, res) => {
     const verificationLink = `${config.CLIENT_URL}/confirm_email?v_token=${authData.emailVerificationToken}`;
 
     const messageDetails = {
-        recieverEmail: email,
+        receiverEmail: email,
         verifyLink: verificationLink,
         template: 'verifyEmail'
     }
 
-    // await publishDirectMessage
-    //     (authChannel,
-    //         'jobber-email-notification',
-    //         'auth-email',
-    //         JSON.stringify(messageDetails)
-    //     );
+
+
+
+    await publishDirectMessage
+        (   authChannel,
+            'jobber-email-notification',
+            'auth-email',
+            JSON.stringify(messageDetails)
+        );
 
     const userJWT = signToken(result.id, result.email, result.email);
 
@@ -72,3 +73,4 @@ module.exports.create = async (req, res) => {
 
 
 }
+

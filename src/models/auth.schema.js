@@ -1,8 +1,8 @@
-const { DataTypes } = require('sequelize');
-const { sequelize } = require('../database');
-const bcrypt = require('bcryptjs');
-const SALT_ROUND = 10;
+import { DataTypes } from 'sequelize';
+import { sequelize } from '../database.js';
+import bcrypt from 'bcryptjs';
 
+const SALT_ROUND = 10;
 
 const AuthModel = sequelize.define('auths', {
     username: {
@@ -39,33 +39,33 @@ const AuthModel = sequelize.define('auths', {
         allowNull: false,
         defaultValue: Date.now
     }
-},{
-    indexes:[
+}, {
+    indexes: [
         {
             unique: true,
-            fields:['email']
+            fields: ['email']
         },
         {
             unique: true,
-            fields:['username']
+            fields: ['username']
         },
         {
             unique: true,
-            fields:['emailVerificationToken']
+            fields: ['emailVerificationToken']
         }
     ]
 });
 
-AuthModel.addHook('beforeCreate', async(auth)=>{
-    const hashedPassword = await bcrypt.hash(auth.dataValues.password,SALT_ROUND);
-    auth.dataValues.password = hashedPassword;
-})
+AuthModel.addHook('beforeCreate', async (auth) => {
+    const hashedPassword = await bcrypt.hash(auth.getDataValue('password'), SALT_ROUND);
+    auth.setDataValue('password', hashedPassword);
+});
 
-AuthModel.prototype.comparePassword = async function(password,hashedPassword){
-    return await bcrypt.compare(password,hashedPassword);
-}
+AuthModel.prototype.comparePassword = async function (password) {
+    return await bcrypt.compare(password, this.getDataValue('password'));
+};
 
 // force:true --> this will delete the table whenever the server gets restarted
-AuthModel.sync({});
+AuthModel.sync();
 
-module.exports = {AuthModel}
+export { AuthModel };

@@ -1,22 +1,13 @@
-const jwt = require("jsonwebtoken");
-const { AuthModel } = require("../models/auth.schema");
-const { publishDirectMessage } = require("../queues/auth.producer");
-const { Op } = require('sequelize');
-const { winstonLogger } = require('../../../9-jobber-shared/src/logger')
-
+import jwt from "jsonwebtoken";
+import { AuthModel } from "../models/auth.schema.js";
+import { publishDirectMessage } from "../queues/auth.producer.js";
+import { Op } from 'sequelize';
+import { winstonLogger } from '../../../9-jobber-shared/src/logger.js';
+import config from '../config.js';
+import{authChannel} from '../app.js'
 const log = winstonLogger('AuthService', 'debug');
 
-const config = require('../config');
 
-
-// const { channel } = require('../app');
-
-// Channel().then(val=> console.log(val));
-let authChannel = null;
-
-function setAuthChannel(channel) {
-    authChannel = channel;
-}
 
 async function createUser(data) {
     try {
@@ -27,6 +18,7 @@ async function createUser(data) {
             createdAt: result.dataValues.createdAt,
             type: 'auth'
         };
+
 
 
         await publishDirectMessage(
@@ -48,22 +40,20 @@ async function getUserById(authId) {
             attributes: {
                 exclude: ['password']
             }
-        })
+        });
 
         return user;
-    }
-    catch (error) {
+    } catch (error) {
         log.error(error);
     }
 }
 
 async function getUserByUsernameOrEmail(username, email) {
-
     const user = await AuthModel.findOne({
         where: {
             [Op.or]: [{ username: username }, { email: email }]
         }
-    })
+    });
 
     return user;
 }
@@ -75,13 +65,14 @@ async function getUserByUsername(username) {
             attributes: {
                 exclude: ['password']
             }
-        })
+        });
 
         return user;
     } catch (error) {
         log.error(error);
     }
 }
+
 async function getUserByEmail(email) {
     try {
         const user = await AuthModel.findOne({
@@ -89,13 +80,14 @@ async function getUserByEmail(email) {
             attributes: {
                 exclude: ['password']
             }
-        })
+        });
 
         return user;
     } catch (error) {
         log.error(error);
     }
 }
+
 async function getUserByVerificationToken(token) {
     try {
         const user = await AuthModel.findOne({
@@ -103,7 +95,7 @@ async function getUserByVerificationToken(token) {
             attributes: {
                 exclude: ['password']
             }
-        })
+        });
 
         return user;
     } catch (error) {
@@ -117,7 +109,9 @@ async function getAuthUserByPasswordToken(token) {
             where: {
                 [Op.and]: [{ passwordResetToken: token }, { passwordResetExpires: { [Op.gt]: new Date() } }]
             }
-        })
+        });
+
+        return user;
     } catch (error) {
         log.error(error);
     }
@@ -154,6 +148,7 @@ async function updatePasswordToken(authId, token, tokenExpiration) {
         log.error(error);
     }
 }
+
 async function updatePassword(authId, password) {
     try {
         await AuthModel.update(
@@ -180,13 +175,13 @@ function signToken(id, email, username) {
                 username
             },
             config.JWT_TOKEN
-        )
+        );
     } catch (error) {
         log.error(error);
     }
 }
 
-module.exports = {
+export {
     createUser,
     getUserById,
     getUserByUsernameOrEmail,
@@ -198,7 +193,5 @@ module.exports = {
     updatePasswordToken,
     updatePassword,
     signToken,
-    setAuthChannel
-}
 
-
+};

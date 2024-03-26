@@ -1,10 +1,14 @@
-const express = require('express');
+import express from 'express';
+import { create } from '../controllers/signup.js';
+import { verifyGatewayRequest } from '../../../9-jobber-shared/src/gateway-middleware.js';
+
 const router = express.Router();
-const authController = require('../controllers/signup');
-const {verifyGatewayRequest} = require('../../../9-jobber-shared/src/gateway-middleware');
 
+import { authChannel } from '../app.js';
 
+// router.get('/check')
 
-router.post('/signup',verifyGatewayRequest,authController.create);   
+router.post('/signup', verifyGatewayRequest, create);   
+// router.post('/signup', create);   
 
-module.exports = router;
+export default router;
