@@ -61,8 +61,8 @@ AuthModel.addHook('beforeCreate', async (auth) => {
     auth.setDataValue('password', hashedPassword);
 });
 
-AuthModel.prototype.comparePassword = async function (password) {
-    return await bcrypt.compare(password, this.getDataValue('password'));
+AuthModel.prototype.comparePassword = async function (password,hashedPassword) {
+    return await bcrypt.compare(password, hashedPassword);
 };
 
 // force:true --> this will delete the table whenever the server gets restarted

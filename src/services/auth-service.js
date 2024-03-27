@@ -62,10 +62,11 @@ async function getUserByUsername(username) {
     try {
         const user = await AuthModel.findOne({
             where: { username: username.toLowerCase() },
-            attributes: {
-                exclude: ['password']
-            }
+            // attributes: {
+            //     exclude: ['password']
+            // }
         });
+        
 
         return user;
     } catch (error) {
@@ -77,9 +78,9 @@ async function getUserByEmail(email) {
     try {
         const user = await AuthModel.findOne({
             where: { email: email.toLowerCase() },
-            attributes: {
-                exclude: ['password']
-            }
+            // attributes: {
+            //     exclude: ['password']
+            // }
         });
 
         return user;

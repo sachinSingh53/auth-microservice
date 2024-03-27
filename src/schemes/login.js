@@ -9,4 +9,4 @@ const loginSchema = Joi.object({
     password: Joi.string().min(4).max(12).required()
 });
 
-export default loginSchema;
+export  {loginSchema};
