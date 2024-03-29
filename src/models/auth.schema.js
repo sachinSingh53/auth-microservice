@@ -35,7 +35,8 @@ const AuthModel = sequelize.define('auths', {
         allowNull: true
     },
     passwordResetExpires: {
-        type: DataTypes.STRING,
+        // type: DataTypes.STRING,
+        type: DataTypes.DATE,
         allowNull: false,
         defaultValue: Date.now
     }
@@ -63,6 +64,9 @@ AuthModel.addHook('beforeCreate', async (auth) => {
 
 AuthModel.prototype.comparePassword = async function (password,hashedPassword) {
     return await bcrypt.compare(password, hashedPassword);
+};
+AuthModel.prototype.hashPassword = async function (password) {
+    return await bcrypt.hash(password,SALT_ROUND);
 };
 
 // force:true --> this will delete the table whenever the server gets restarted

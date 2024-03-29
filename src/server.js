@@ -5,12 +5,15 @@ import cors from 'cors';
 import compression from 'compression';
 import bodyParser from 'body-parser';
 import { createConnection } from './queues/connection.js';
-import authRoutes from './routes/auth.js';
 import { winstonLogger } from '../../9-jobber-shared/src/logger.js';
-import { CustomError, BadRequestError, ServerError } from '../../9-jobber-shared/src/errors.js';
+import { CustomError } from '../../9-jobber-shared/src/errors.js';
+
+import authRoutes from './routes/auth.js';
+import currentUserRoutes from './routes/currentUserRoutes.js';
+import healthroutes from './routes/health.js';
+
 
 const log = winstonLogger('authServer', 'debug');
-
 
 function securityMiddleware(app) {
     app.set('trust proxy', 1);
@@ -39,6 +42,8 @@ function standardMiddleware(app) {
 function routesMiddleware(app) {
     
     app.use('/api/v1/auth', authRoutes);
+    app.use('/api/v1/auth', currentUserRoutes);
+    app.use('',healthroutes);
 }
 
 async function startQueues() {

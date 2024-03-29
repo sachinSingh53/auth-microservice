@@ -11,7 +11,7 @@ const passwordSchema = Joi.object({
 
 const changePasswordSchema = Joi.object({
   currentPassword: Joi.string().required().min(4).max(12),
-  newPassword: Joi.string().required().valid(Joi.ref('password'))
+  newPassword: Joi.string().required().min(4).max(12)
 });
 
 export { emailSchema, passwordSchema, changePasswordSchema };

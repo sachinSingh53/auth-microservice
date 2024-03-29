@@ -7,6 +7,7 @@ import { StatusCodes } from 'http-status-codes';
 import { winstonLogger } from '../../../9-jobber-shared/src/logger.js';
 import { BadRequestError } from '../../../9-jobber-shared/src/errors.js';
 import {authChannel} from '../app.js'
+
 const log = winstonLogger('AuthController', 'debug');
 
 

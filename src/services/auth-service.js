@@ -70,6 +70,7 @@ async function getUserByUsername(username) {
 
         return user;
     } catch (error) {
+
         log.error(error);
     }
 }
@@ -136,6 +137,11 @@ async function updateVerifyEmailField(authId, token, emailVerified) {
 
 async function updatePasswordToken(authId, token, tokenExpiration) {
     try {
+
+        // if (tokenExpiration instanceof Date) {
+        //     tokenExpiration = tokenExpiration.toISOString();
+        // }
+
         await AuthModel.update(
             {
                 passwordResetToken: token,
@@ -145,7 +151,9 @@ async function updatePasswordToken(authId, token, tokenExpiration) {
                 where: { id: authId }
             }
         );
+        
     } catch (error) {
+
         log.error(error);
     }
 }
@@ -194,5 +202,4 @@ export {
     updatePasswordToken,
     updatePassword,
     signToken,
-
 };
