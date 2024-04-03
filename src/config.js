@@ -10,6 +10,7 @@ class Config {
         this.RABBITMQ_ENDPOINT = process.env.RABBITMQ_ENDPOINT || '';
         this.MYSQL_DB = process.env.MYSQL_DB || '';
         this.CLIENT_URL = process.env.CLIENT_URL || '';
+        this.ELASTIC_SEARCH_URL = process.env.ELASTIC_SEARCH_URL|| '';
     }
 }
 

@@ -11,6 +11,9 @@ import { CustomError } from '../../9-jobber-shared/src/errors.js';
 import authRoutes from './routes/auth.js';
 import currentUserRoutes from './routes/currentUserRoutes.js';
 import healthroutes from './routes/health.js';
+import searchRoutes from './routes/search.js';
+
+import { checkConnection, createIndex } from './elasticsearch.js';
 
 
 const log = winstonLogger('authServer', 'debug');
@@ -44,6 +47,7 @@ function routesMiddleware(app) {
     app.use('/api/v1/auth', authRoutes);
     app.use('/api/v1/auth', currentUserRoutes);
     app.use('',healthroutes);
+    app.use('/api/v1/auth',searchRoutes);
 }
 
 async function startQueues() {
@@ -54,6 +58,11 @@ async function startQueues() {
         log.error('error in startQueues() in server.js ', error, '');
     }
 
+}
+
+function startElasticSearch(){
+    checkConnection();
+    createIndex('gigs');
 }
 
 function startServer(app) {
@@ -83,6 +92,7 @@ async function start(app) {
     standardMiddleware(app);
     routesMiddleware(app);
     const authChannel = await startQueues();
+    startElasticSearch();
     errorHandler(app);
     startServer(app);
 
