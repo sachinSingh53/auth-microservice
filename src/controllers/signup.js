@@ -10,9 +10,6 @@ import {authChannel} from '../app.js'
 
 const log = winstonLogger('AuthController', 'debug');
 
-
-
-
 export const create = async (req, res) => {
 
 
@@ -20,10 +17,10 @@ export const create = async (req, res) => {
     if (error) {
         throw new BadRequestError(error.details[0].message, 'SignUp create() method error');
     }
-    // console.log(req.body); 
+
     const { username, password, email } = req.body;
     const checkIfUserExists = await getUserByUsernameOrEmail(username, email);
-    // console.log(checkIfUserExists);
+    
     if (checkIfUserExists) {
         throw new BadRequestError('Invalid credentials. Email or Username', 'SignUp create() method error');
     }

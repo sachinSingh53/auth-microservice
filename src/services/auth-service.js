@@ -20,7 +20,7 @@ async function createUser(data) {
         };
 
 
-
+        
         await publishDirectMessage(
             authChannel,
             'jobber-buyer-updates',
