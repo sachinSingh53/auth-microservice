@@ -14,5 +14,4 @@ async function init() {
 const authChannel = await init();
 
 
-
 export {authChannel};
