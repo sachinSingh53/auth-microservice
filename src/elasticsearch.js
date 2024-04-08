@@ -49,6 +49,7 @@ async function getDoccumentById(indexName,gigId){
             index: indexName,
             id:gigId
         })
+        
         return result._source;
     } catch (error) {
         log.error('error','AuthService getDoccumentById() method:', error);
@@ -63,9 +64,6 @@ async function gigsSearch(
     min,
     max
 ){
-
-
-
     const {from,size,type} = paginate;
 
     const queryList = [
@@ -77,6 +75,7 @@ async function gigsSearch(
         },
         {
             term:{
+                //this is for active gigs
                 active: true
             }
         }

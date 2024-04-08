@@ -33,6 +33,7 @@ export async function gigs(req,res){
 }
 
 export async function singleGigById(req,res){
+
     const gig = await getDoccumentById('gigs',req.params.gigId);
     res.status(StatusCodes.OK).json({
         message: 'Single gig result',

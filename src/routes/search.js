@@ -6,6 +6,6 @@ const router = express.Router();
 
 
 router.get('/search/gig/:from/:size/:type',gigs);
-router.get('/search/gig/:id',singleGigById);
+router.get('/search/gig/:gigId',singleGigById);
 
 export default router;

@@ -73,7 +73,7 @@ async function resetPassword(req,res){
 
     const existingUser = await getAuthUserByPasswordToken(token);
 
-    console.log(existingUser);
+
 
     if(!existingUser){
         throw new BadRequestError('reset token expired','password resetPassword() method error');
@@ -119,6 +119,12 @@ async function changePassword(req,res){
 
     if(!existingUser){
         throw new BadRequestError('invalid password (please login again)','password changePassword() method error');
+    }
+
+    const comparePassword = await existingUser.comparePassword(currentPassword,existingUser.dataValues.password);
+
+    if(!comparePassword){
+        throw new BadRequestError('invalid currentPassword (try otherway to change password)','password changePassword() method error');
     }
 
     const hashedPassword = await existingUser.hashPassword(newPassword);
