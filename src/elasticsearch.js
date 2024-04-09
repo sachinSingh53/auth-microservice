@@ -1,6 +1,6 @@
 import { Client } from '@elastic/elasticsearch';
 import { winstonLogger } from '../../9-jobber-shared/src/logger.js';
-import config from '../src/config.js';
+import config from './config.js';
 
 const log = winstonLogger('authElasticSearchServer', 'debug');
 
