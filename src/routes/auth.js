@@ -1,5 +1,6 @@
 import express from 'express';
 import { create } from '../controllers/signup.js';
+import {create as createSeed} from '../controllers/seed.js'
 import { verifyGatewayRequest } from '../../../9-jobber-shared/src/gateway-middleware.js';
 
 import { read } from '../controllers/signin.js';
@@ -12,6 +13,7 @@ const router = express.Router();
 
 router.post('/signup', verifyGatewayRequest, create);   
 router.post('/signin', verifyGatewayRequest, read);   
+router.put('/seed/:count', verifyGatewayRequest, createSeed);
 router.put('/verify-email', verifyGatewayRequest, update);   
 router.put('/forgot-password', verifyGatewayRequest, ForgotPassword);
 router.put('/reset-password/:token', verifyGatewayRequest, resetPassword);

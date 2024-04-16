@@ -59,7 +59,7 @@ export const create = async (req, res) => {
             JSON.stringify(messageDetails)
         );
 
-    const userJWT = signToken(result.id, result.email, result.email);
+    const userJWT = signToken(result.id, result.username, result.email);
 
     res.status(StatusCodes.CREATED).json({
         message: 'user created successfully',
