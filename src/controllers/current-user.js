@@ -1,4 +1,4 @@
-import { BadRequestError } from "../../../9-jobber-shared/src/errors.js";
+import { BadRequestError, NotAuthorizedError } from "../../../9-jobber-shared/src/errors.js";
 import { lowerCase } from "../../../9-jobber-shared/src/helper.js";
 import { getUserByEmail, getUserById, updateVerifyEmailField } from "../services/auth-service.js";
 import{StatusCodes} from 'http-status-codes'
@@ -9,7 +9,11 @@ import crypto from 'crypto';
 //to find current user
 export async function read(req,res){
     let user = null;
+
     const existingUser = await getUserById(req.currentUser.id);
+    if(!existingUser){
+        throw new NotAuthorizedError('Not authorized, Please login again','current-user controller read() method error');
+    }
     if(Object.keys(existingUser).length){
         user = existingUser;
     }
