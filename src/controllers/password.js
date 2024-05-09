@@ -80,7 +80,7 @@ async function resetPassword(req,res){
     }
 
     const hashedPassword = await existingUser.hashPassword(password);
-    console.log(hashedPassword);
+
 
     await updatePassword(existingUser.dataValues.id,hashedPassword);
 
