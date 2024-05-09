@@ -15,7 +15,6 @@ import searchRoutes from './routes/search.js';
 
 import { checkConnection, createIndex } from './elasticsearch.js';
 
-
 const log = winstonLogger('authServer', 'debug');
 
 function securityMiddleware(app) {
