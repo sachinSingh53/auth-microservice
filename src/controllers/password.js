@@ -117,6 +117,8 @@ async function changePassword(req,res){
 
     const existingUser = await getUserByUsername(`${req.currentUser.username}`);
 
+    console.log(req.currentUser);
+
     if(!existingUser){
         throw new BadRequestError('invalid password (please login again)','password changePassword() method error');
     }
