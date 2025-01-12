@@ -4,11 +4,11 @@ import signupSchema from "../schemes/signup.js";
 import { getUserByUsernameOrEmail, createUser, signToken } from "../services/auth-service.js";
 import crypto from 'crypto';
 import { StatusCodes } from 'http-status-codes';
-import { winstonLogger } from '../../../9-jobber-shared/src/logger.js';
-import { BadRequestError } from '../../../9-jobber-shared/src/errors.js';
+import { winstonLogger } from '@sachinsingh53/jobber-shared';
+import { BadRequestError } from '@sachinsingh53/jobber-shared';
 import {authChannel} from '../app.js'
 
-const log = winstonLogger('AuthController', 'debug');
+const log = winstonLogger(`${config.ELASTIC_SEARCH_URL}`,'AuthController', 'debug');
 
 export const create = async (req, res) => {
 
@@ -66,9 +66,6 @@ export const create = async (req, res) => {
         user: result,
         token: userJWT
     })
-
-
-
 
 }
 

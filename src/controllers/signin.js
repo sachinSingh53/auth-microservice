@@ -1,10 +1,12 @@
-import { isEmail } from '../../../9-jobber-shared/src/helper.js';
+import { isEmail } from '@sachinsingh53/jobber-shared';
 import {loginSchema} from '../schemes/login.js'
 import { getUserByEmail, getUserByUsername, signToken } from '../services/auth-service.js';
-import {BadRequestError} from '../../../9-jobber-shared/src/errors.js';
-import { winstonLogger } from '../../../9-jobber-shared/src/logger.js';
+import {BadRequestError} from '@sachinsingh53/jobber-shared';
+import { winstonLogger } from '@sachinsingh53/jobber-shared';
 import { StatusCodes } from 'http-status-codes';
-const log = winstonLogger('signIn controller','debug');
+import config from '../config.js';
+
+const log = winstonLogger(`${config.ELASTIC_SEARCH_URL}`,'signIn controller','debug');
 
 export const read = async(req,res)=>{
 

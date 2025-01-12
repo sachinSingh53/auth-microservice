@@ -1,8 +1,8 @@
 import crypto from 'crypto';
 import { createUser, getUserByUsernameOrEmail } from '../services/auth-service.js';
 import { faker } from '@faker-js/faker';
-import { BadRequestError} from '../../../9-jobber-shared/src/errors.js';
-import{firstLetterUppercase, lowerCase } from '../../../9-jobber-shared/src/helper.js'
+import { BadRequestError} from '@sachinsingh53/jobber-shared';
+import{firstLetterUppercase, lowerCase } from '@sachinsingh53/jobber-shared'
 import { generateUsername } from 'unique-username-generator';
 import { v4 as uuidV4 } from 'uuid';
 import { StatusCodes } from 'http-status-codes';

@@ -2,10 +2,11 @@ import jwt from "jsonwebtoken";
 import { AuthModel } from "../models/auth.schema.js";
 import { publishDirectMessage } from "../queues/auth.producer.js";
 import { Op } from 'sequelize';
-import { winstonLogger } from '../../../9-jobber-shared/src/logger.js';
+import { winstonLogger } from '@sachinsingh53/jobber-shared';
 import config from '../config.js';
 import{authChannel} from '../app.js'
-const log = winstonLogger('AuthService', 'debug');
+
+const log = winstonLogger(`${config.ELASTIC_SEARCH_URL}`,'AuthService', 'debug');
 
 
 

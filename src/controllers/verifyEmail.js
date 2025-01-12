@@ -1,4 +1,4 @@
-import { BadRequestError } from "../../../9-jobber-shared/src/errors.js";
+import { BadRequestError } from "@sachinsingh53/jobber-shared";
 import { getUserById, getUserByVerificationToken, updateVerifyEmailField } from "../services/auth-service.js";
 import{StatusCodes} from 'http-status-codes'
 

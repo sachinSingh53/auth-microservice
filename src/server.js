@@ -5,8 +5,8 @@ import cors from 'cors';
 import compression from 'compression';
 import bodyParser from 'body-parser';
 import { createConnection } from './queues/connection.js';
-import { winstonLogger } from '../../9-jobber-shared/src/logger.js';
-import { CustomError } from '../../9-jobber-shared/src/errors.js';
+import { winstonLogger } from '@sachinsingh53/jobber-shared';
+import { CustomError } from '@sachinsingh53/jobber-shared';
 
 import authRoutes from './routes/auth.js';
 import currentUserRoutes from './routes/currentUserRoutes.js';
@@ -15,7 +15,7 @@ import searchRoutes from './routes/search.js';
 
 import { checkConnection, createIndex } from './elasticsearch.js';
 
-const log = winstonLogger('authServer', 'debug');
+const log = winstonLogger(`${config.ELASTIC_SEARCH_URL}`,'authServer', 'debug');
 
 function securityMiddleware(app) {
     app.set('trust proxy', 1);

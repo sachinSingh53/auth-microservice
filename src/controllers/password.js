@@ -1,5 +1,5 @@
 import{StatusCodes} from 'http-status-codes'
-import { BadRequestError } from "../../../9-jobber-shared/src/errors.js";
+import { BadRequestError } from "@sachinsingh53/jobber-shared";
 import { authChannel } from "../app.js";
 import config from "../config.js";
 import { publishDirectMessage } from "../queues/auth.producer.js";

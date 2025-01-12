@@ -1,8 +1,8 @@
 import { Sequelize } from 'sequelize';
 import config from './config.js';
-import { winstonLogger } from '../../9-jobber-shared/src/logger.js';
+import { winstonLogger } from '@sachinsingh53/jobber-shared';
 
-const log = winstonLogger('authServerDatabase', 'debug');
+const log = winstonLogger(`${config.ELASTIC_SEARCH_URL}`,'authServerDatabase', 'debug');
 
 const sequelize = new Sequelize(config.MYSQL_DB, {
     dialect: 'mysql',

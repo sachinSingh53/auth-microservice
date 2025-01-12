@@ -1,5 +1,5 @@
-import { BadRequestError, NotAuthorizedError } from "../../../9-jobber-shared/src/errors.js";
-import { lowerCase } from "../../../9-jobber-shared/src/helper.js";
+import { BadRequestError, NotAuthorizedError } from "@sachinsingh53/jobber-shared";
+import { lowerCase } from "@sachinsingh53/jobber-shared";
 import { getUserByEmail, getUserById, updateVerifyEmailField } from "../services/auth-service.js";
 import{StatusCodes} from 'http-status-codes'
 import config from '../config.js'
